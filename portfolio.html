@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Ukana Odpurev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/portfolio.css" />
+</head>
+<body class="portfolio-page">
+
+ <div class="site-overlay">
+    <p class="site-name">UKANA ODPUREV</p>
+   <nav class="side-nav" id="sideNav">
+  <a class="nav-item" href="home.html">HOME</a>
+  <span class="nav-item active">PORTFOLIO</span>
+  <a class="nav-item" href="about.html">ABOUT</a>
+  <a class="nav-item" href="bookme.html">BOOK ME</a>
+</nav>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="portfolio-main">
+
+    <!-- TOGGLE BUTTONS -->
+   <div class="view-toggle">
+      <button class="toggle-btn active" id="btnEverything" onclick="showView('everything')">
+        <img src="assets/everything_button.png" alt="Everything" class="btn-image" />
+      </button>
+      <button class="toggle-btn" id="btnCategories" onclick="showView('categories')">
+        <img src="assets/categories_button.png" alt="Categories" class="btn-image" />
+      </button>
+    </div>
+
+    <!-- EVERYTHING VIEW: masonry grid -->
+    <div class="view-everything" id="viewEverything">
+      <div class="masonry-grid">
+        <img src="website content/graduation_-12.jpg"                   alt="" />
+        <img src="website content/khanh-20.jpg"                         alt="" />
+        <img src="website content/Ivana_Graduation_Shoot_May_31st_2024-36.jpg" alt="" />
+        <img src="website content/nyc-24.jpg"                           alt="" />
+        <img src="website content/moody14.jpg"                          alt="" />
+        <img src="website content/alicia-13.jpg"                        alt="" />
+        <img src="website content/dance-10.jpg"                         alt="" />
+        <img src="website content/khanh-31.jpg"                         alt="" />
+        <img src="website content/fashion_uiuc-6.jpg"                   alt="" />
+        <img src="website content/m-11.jpg"                             alt="" />
+        <img src="website content/nyc-44.jpg"                           alt="" />
+        <img src="website content/pcn-110.jpg"                          alt="" />
+        <img src="website content/miyahXrussel_-14.jpg"                 alt="" />
+        <img src="website content/advntxdao-21.jpg"                     alt="" />
+        <img src="website content/nycwitlove-15.jpg"                    alt="" />
+        <img src="website content/khanh-8.jpg"                          alt="" />
+        <img src="website content/m-20.jpg"                             alt="" />
+        <img src="website content/trip-6.jpg"                           alt="" />
+        <img src="website content/abby-12.jpg"                          alt="" />
+        <img src="website content/nyc-7.jpg"                            alt="" />
+        <img src="website content/biglittle-3.jpg"                      alt="" />
+        <img src="website content/family-2.jpg"                         alt="" />
+        <img src="website content/nycwitlove-4.jpg"                     alt="" />
+        <img src="website content/fb8-8.jpg"                            alt="" />
+      </div>
+    </div>
+
+    <!-- CATEGORIES VIEW: large tiles -->
+    <div class="view-categories" id="viewCategories" style="display:none">
+      <div class="cat-grid">
+
+        <div class="cat-tile cat-wide">
+          <img src="website content/graduation_-12.jpg" alt="" />
+          <div class="cat-label">GRADUATION</div>
+        </div>
+
+        <div class="cat-tile">
+          <img src="website content/khanh-20.jpg" alt="" />
+          <div class="cat-label">PORTRAITS</div>
+        </div>
+
+        <div class="cat-tile">
+          <img src="website content/dance-10.jpg" alt="" />
+          <div class="cat-label">EVENTS</div>
+        </div>
+
+        <div class="cat-tile cat-wide">
+          <img src="website content/fashion_uiuc-6.jpg" alt="" />
+          <div class="cat-label">EDITORIAL</div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function showView(view) {
+      document.getElementById('viewEverything').style.display = view === 'everything' ? 'block' : 'none';
+      document.getElementById('viewCategories').style.display = view === 'categories' ? 'block' : 'none';
+      document.getElementById('btnEverything').classList.toggle('active', view === 'everything');
+      document.getElementById('btnCategories').classList.toggle('active', view === 'categories');
+    }
+
+    // Dynamically offset main content based on actual nav overlay right edge
+    function syncMainMargin() {
+      const overlay  = document.querySelector('.site-overlay');
+      const main     = document.querySelector('.portfolio-main');
+      const siteName = document.querySelector('.site-name');
+      if (!overlay || !main || !siteName) return;
+      // Use the widest nav text element as the reference, not the full paper element
+      const navItems = document.querySelectorAll('.nav-item');
+      let maxRight = siteName.getBoundingClientRect().right;
+      navItems.forEach(el => {
+        const r = el.getBoundingClientRect().right;
+        if (r > maxRight) maxRight = r;
+      });
+      main.style.marginLeft = (maxRight + 20) + 'px';
+    }
+
+    // Run on load and resize
+    window.addEventListener('resize', syncMainMargin);
+
+    // Watch for transform changes on overlay (set by main.js setupOverlayScale)
+    const overlayEl = document.querySelector('.site-overlay');
+    new MutationObserver(syncMainMargin).observe(overlayEl, {
+      attributes: true, attributeFilter: ['style']
+    });
+
+    // Also run after a short delay to catch late transform application
+    setTimeout(syncMainMargin, 50);
+    setTimeout(syncMainMargin, 200);
+  </script>
+</body>
+</html>

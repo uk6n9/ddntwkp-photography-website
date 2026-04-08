@@ -1,0 +1,140 @@
+/* ============================================================
+   PORTFOLIO PAGE
+   ============================================================ */
+
+body.portfolio-page {
+  background: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Override fixed video bg from home page */
+body.portfolio-page .bg-video { display: none; }
+
+/* Portfolio overlay uses same paper as home — no override needed */
+
+/* ============================================================
+   MAIN CONTENT — offset from left nav
+   ============================================================ */
+.portfolio-main {
+  /* margin-left set dynamically by JS based on nav width */
+  padding: 28px 32px 80px;
+  min-height: 100vh;
+  transition: margin-left 0.15s ease;
+}
+
+/* ============================================================
+   TOGGLE BUTTONS
+   ============================================================ */
+.view-toggle {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e5e5;
+  align-items: center; /* Ensures images align nicely */
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+/* Style the new image inside the button */
+.toggle-btn .btn-image {
+  height: 128px; /* Adjust this to make your keyboard images bigger or smaller */
+  width: auto;
+  display: block;
+  opacity: 0.4; /* Fades the inactive button */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Full opacity when active or hovered */
+.toggle-btn.active .btn-image,
+.toggle-btn:hover .btn-image {
+  opacity: 1;
+}
+
+/* Optional hover pop */
+.toggle-btn:hover .btn-image {
+  transform: scale(1.02);
+}
+
+/* Keep the active underline indicator */
+
+
+/* ============================================================
+   EVERYTHING — masonry columns, consistent 8px gap everywhere
+   ============================================================ */
+.masonry-grid {
+  column-count: 3;
+  column-gap: 8px;
+}
+
+.masonry-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 8px;   /* matches column-gap exactly */
+  break-inside: avoid;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.masonry-grid img:hover { opacity: 0.88; }
+
+/* ============================================================
+   CATEGORIES — large tiles
+   ============================================================ */
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.cat-tile {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+}
+
+.cat-tile.cat-wide {
+  grid-column: span 2;
+  aspect-ratio: 16/7;
+}
+
+.cat-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.cat-tile:hover img { transform: scale(1.03); }
+
+.cat-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: #fff;
+  background: rgba(0,0,0,0.18);
+  transition: background 0.3s;
+}
+.cat-tile:hover .cat-label { background: rgba(0,0,0,0.28); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+/* Always 3 columns — no responsive override for the grid */
+@media (max-width: 900px) {
+  .cat-grid { grid-template-columns: 1fr; }
+  .cat-tile.cat-wide { grid-column: span 1; aspect-ratio: 4/3; }
+}

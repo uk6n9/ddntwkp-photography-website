@@ -20,6 +20,23 @@ body {
 a { color: inherit; text-decoration: none; }
 
 /* ============================================================
+   BACKGROUND VIDEO — centered & fullscreen
+   ============================================================ */
+.bg-video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100vw;
+  min-height: 100vh;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  object-position: center center;
+  z-index: -1;
+}
+
+/* ============================================================
    CAROUSEL — vertical, driven by up/down cursor movement
    ============================================================ */
 .scroll-container {
