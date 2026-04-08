@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/gallery.css" />
+</head>
+<body class="gallery-page">
+
+  <!-- NAV -->
+  <nav class="nav nav-minimal" id="nav">
+    <a href="index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Portfolio
+    </a>
+    <a href="index.html" class="nav-logo">Your Name</a>
+    <div style="width:140px"></div>
+  </nav>
+
+  <!-- GALLERY HEADER -->
+  <div class="gallery-header" id="galleryHeader">
+    <div class="gallery-header-inner">
+      <p class="gallery-event" id="galleryEvent">Graduation 2024</p>
+      <h1 class="gallery-client-name" id="galleryClientName">Loading gallery…</h1>
+      <p class="gallery-school" id="gallerySchool"></p>
+    </div>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div class="gallery-error" id="galleryError" style="display:none">
+    <div class="error-inner">
+      <div class="error-icon">⊘</div>
+      <h2>Gallery Not Found</h2>
+      <p>The gallery ID you used doesn't exist or may have expired. Please check your delivery email or contact the photographer.</p>
+      <a href="index.html" class="btn btn-dark">Back to Portfolio</a>
+    </div>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div class="gallery-loading" id="galleryLoading">
+    <div class="loading-spinner"></div>
+    <p>Loading your photos…</p>
+  </div>
+
+  <!-- GALLERY CONTENT -->
+  <div class="gallery-content" id="galleryContent" style="display:none">
+
+    <!-- CONTROLS BAR -->
+    <div class="controls-bar" id="controlsBar">
+      <div class="controls-left">
+        <span class="photo-count" id="photoCount">0 photos</span>
+      </div>
+      <div class="controls-right">
+        <button class="ctrl-btn" id="selectAllBtn" onclick="toggleSelectAll()">Select All</button>
+        <button class="ctrl-btn ctrl-btn-primary" id="downloadSelectedBtn" onclick="downloadSelected()" disabled>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1v9M4 7l3.5 3.5L11 7M2 13h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download Selected (<span id="selectedCount">0</span>)
+        </button>
+        <button class="ctrl-btn ctrl-btn-outline" onclick="downloadAll()">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1v9M4 7l3.5 3.5L11 7M2 13h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download All
+        </button>
+      </div>
+    </div>
+
+    <!-- PHOTO GRID -->
+    <div class="photo-grid" id="photoGrid">
+      <!-- Populated by gallery.js -->
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lightbox-close" id="lightboxClose" onclick="closeLightbox()" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" onclick="navigateLightbox(-1)" aria-label="Previous photo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="lightbox-stage">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="Photo preview" />
+      <div class="lightbox-spinner" id="lightboxSpinner"></div>
+    </div>
+
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" onclick="navigateLightbox(1)" aria-label="Next photo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 4L17 12L9 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="lightbox-footer">
+      <span class="lightbox-counter" id="lightboxCounter">1 / 1</span>
+      <div class="lightbox-actions">
+        <button class="lightbox-select-btn" id="lightboxSelectBtn" onclick="toggleSelectFromLightbox()">Select</button>
+        <button class="lightbox-download-btn" onclick="downloadFromLightbox()">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1v9M4 7l3.5 3.5L11 7M2 13h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()"></div>
+
+  <!-- DOWNLOAD PROGRESS MODAL -->
+  <div class="dl-modal" id="dlModal">
+    <div class="dl-modal-inner">
+      <p class="dl-modal-title" id="dlModalTitle">Preparing download…</p>
+      <div class="dl-progress-track">
+        <div class="dl-progress-bar" id="dlProgressBar" style="width:0%"></div>
+      </div>
+      <p class="dl-modal-sub" id="dlModalSub">0 of 0 photos</p>
+    </div>
+  </div>
+  <div class="dl-modal-overlay" id="dlModalOverlay"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="config.js"></script>
+  <script src="js/adobe-api.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Static Site (Python)",
+      "runtimeExecutable": "ruby",
+      "runtimeArgs": ["-run", "-e", "httpd", "--", "/Users/gt3rs/Desktop/WebSitePhoto", "-p", "8080"],
+      "port": 8080
+    }
+  ]
+}
