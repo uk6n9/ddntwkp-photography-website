@@ -80,7 +80,7 @@ function setupDrag() {}
 //   https://res.cloudinary.com/doailynuq/image/upload/q_auto,f_auto/graduation_3.jpg
 function cloudinaryUrl(category, index) {
   const cloud = CONFIG.cloudinary.cloudName;
-  return `https://res.cloudinary.com/${cloud}/image/upload/q_auto:best,f_auto/${category}_${index}.jpg`;
+  return `https://res.cloudinary.com/${cloud}/image/upload/${category}_${index}.jpg`;
 }
 
 // Returns an array of all URLs for a category

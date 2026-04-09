@@ -143,11 +143,11 @@
 
       const grid = document.getElementById('categoryGrid');
       grid.innerHTML = '';
-      urls.forEach((url, idx) => {
+      urls.forEach(url => {
         const img     = document.createElement('img');
         img.src       = url;
         img.alt       = '';
-        img.loading   = idx < 6 ? 'eager' : 'lazy';
+        img.loading   = 'eager';
         img.onerror   = function() {
           this.style.cssText = 'display:none;margin:0;padding:0;height:0';
           this.style.gridRowEnd = 'span 1';
@@ -217,11 +217,11 @@
 
       // Inject into everything grid
       const grid = document.getElementById('masonryGrid');
-      allUrls.forEach((url, idx) => {
+      allUrls.forEach(url => {
         const img     = document.createElement('img');
         img.src       = url;
         img.alt       = '';
-        img.loading   = idx < 6 ? 'eager' : 'lazy';
+        img.loading   = 'eager';
         img.onerror   = function() {
           this.style.cssText = 'display:none;margin:0;padding:0;height:0';
           this.style.gridRowEnd = 'span 1';
