@@ -55,9 +55,9 @@
             <img src="" alt="" loading="eager" />
             <div class="cat-label">GRADUATION</div>
           </div>
-          <div class="cat-tile" id="cat-wedding">
+          <div class="cat-tile" id="cat-landscape">
             <img src="" alt="" loading="eager" />
-            <div class="cat-label">WEDDING</div>
+            <div class="cat-label">LANDSCAPE</div>
           </div>
           <div class="cat-tile" id="cat-cars">
             <img src="" alt="" loading="eager" />
@@ -95,7 +95,7 @@
       const cats = CONFIG.cloudinary.categories;
 
       // Build full list of all image URLs across enabled categories
-      const order = ['graduation', 'portrait', 'wedding', 'cars', 'events', 'street'];
+      const order = ['graduation', 'portrait', 'cars', 'events', 'street', 'landscape'];
       const allUrls = [];
       order.forEach(cat => {
         const count = cats[cat]?.count || 0;
