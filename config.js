@@ -29,7 +29,7 @@ const CONFIG = {
       portrait:   { count: 15, cover: 15 },
       wedding:    { count:  0, cover: 1 },
       cars:       { count:  24, cover: 21 },
-      events:     { count:  17, cover: 1 },
+      events:     { count:  17, cover: 12 },
       street:     { count:  0, cover: 1 },
     },
   },
