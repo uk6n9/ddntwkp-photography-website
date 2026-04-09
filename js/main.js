@@ -14,19 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // Dynamically scale the paper overlay with viewport size
 function setupOverlayScale() {
   const overlay = document.querySelector('.site-overlay');
-  const BASE_W = 1440;
-  const BASE_H = 900;
-  const PADDING = 15;
+  const BASE_W  = 1440;
+  const BASE_H  = 900;
+  const PAD_X   = 24;
+  // The overlay is at top:-60px with 85px padding before content.
+  // On small screens the scale shrinks the padding, so content creeps above
+  // the viewport. We compute the minimum translateY needed to keep it visible.
+  const ELEM_TOP    = 60;  // absolute value of top:-60px
+  const PAD_TOP     = 85;  // padding-top on the overlay
+  const SAFE_MARGIN = 24;  // px breathing room from top edge
 
   function update() {
-    // On mobile, CSS handles layout — skip JS scaling
-    if (window.innerWidth <= 768) {
-      overlay.style.transform  = 'none';
-      overlay.style.visibility = 'visible';
-      return;
-    }
-    const scale = Math.sqrt((window.innerWidth / BASE_W) * (window.innerHeight / BASE_H));
-    overlay.style.transform  = `translate(${PADDING}px, ${PADDING}px) scale(${scale})`;
+    const scale  = Math.sqrt((window.innerWidth / BASE_W) * (window.innerHeight / BASE_H));
+    // Minimum Y so first text pixel sits at least SAFE_MARGIN below viewport top
+    const minY   = Math.max(PAD_X, ELEM_TOP - (PAD_TOP * scale) + SAFE_MARGIN);
+    overlay.style.transform  = `translate(${PAD_X}px, ${minY}px) scale(${scale})`;
     overlay.style.visibility = 'visible';
   }
 

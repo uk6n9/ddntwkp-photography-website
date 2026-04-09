@@ -79,7 +79,7 @@ a { color: inherit; text-decoration: none; }
 .site-overlay {
   position: fixed;
   top: -60px;
-  left: -15px; /* compensate so translate(15px) lands flush */
+  left: -24px; /* compensate so translate(24px) lands with padding from edge */
   z-index: 50;
   padding: 85px 50px 60px 44px;
   display: inline-flex;
@@ -187,39 +187,5 @@ a { color: inherit; text-decoration: none; }
    RESPONSIVE — MOBILE
    ============================================================ */
 @media (max-width: 768px) {
-
-  /* Lock overlay to top-left, skip JS scaling on mobile */
-  .site-overlay {
-    position: fixed;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    visibility: visible !important;
-    width: 100vw;
-    padding: 14px 20px 12px 16px;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    /* override paper texture on mobile — cleaner */
-    background-image: none;
-  }
-
-  .site-name {
-    font-size: 0.7rem;
-    margin-bottom: 0;
-    white-space: nowrap;
-  }
-
-  .side-nav {
-    flex-direction: row;
-    gap: 16px;
-  }
-
-  .nav-item {
-    font-size: 0.7rem;
-    line-height: 1;
-  }
+  /* JS handles overlay positioning — nothing to override */
 }

@@ -148,14 +148,9 @@ body.portfolio-page .bg-video { display: none; }
    ============================================================ */
 /* Always 3 columns — no responsive override for the grid */
 @media (max-width: 768px) {
+  /* margin-left still set by syncMainMargin JS — just reduce padding */
   .portfolio-main {
-    margin-left: 0 !important;
-    padding: 70px 10px 40px;
-  }
-
-  .view-toggle {
-    margin-bottom: 16px;
-    gap: 16px;
+    padding: 16px 10px 40px;
   }
 
   .toggle-btn .btn-image {
@@ -177,12 +172,11 @@ body.portfolio-page .bg-video { display: none; }
   }
 
   .cat-label {
-    font-size: 0.9rem;
-    letter-spacing: 0.12em;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
   }
 }
 
 @media (max-width: 420px) {
   .masonry-grid { column-count: 1; }
-  .cat-grid { grid-template-columns: 1fr; }
 }
