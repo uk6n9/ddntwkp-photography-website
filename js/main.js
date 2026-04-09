@@ -19,9 +19,14 @@ function setupOverlayScale() {
   const PADDING = 15;
 
   function update() {
+    // On mobile, CSS handles layout — skip JS scaling
+    if (window.innerWidth <= 768) {
+      overlay.style.transform  = 'none';
+      overlay.style.visibility = 'visible';
+      return;
+    }
     const scale = Math.sqrt((window.innerWidth / BASE_W) * (window.innerHeight / BASE_H));
-    overlay.style.transform = `translate(${PADDING}px, ${PADDING}px) scale(${scale})`;
-    // Reveal only after correct scale is applied — prevents size-jump on load
+    overlay.style.transform  = `translate(${PADDING}px, ${PADDING}px) scale(${scale})`;
     overlay.style.visibility = 'visible';
   }
 

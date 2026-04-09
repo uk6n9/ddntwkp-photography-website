@@ -128,3 +128,24 @@ body.about-page .bg-video { display: none; }
     max-width: 320px;
   }
 }
+
+@media (max-width: 768px) {
+  .about-main {
+    margin-left: 0 !important;
+    padding: 80px 20px 60px;
+    align-items: flex-start;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .about-photo-wrap {
+    position: static;
+    max-width: 100%;
+  }
+
+  .about-name { font-size: 1rem; }
+  .about-bio  { font-size: 0.8rem; }
+}
