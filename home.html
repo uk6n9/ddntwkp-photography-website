@@ -31,8 +31,30 @@
     <source src="https://res.cloudinary.com/doailynuq/video/upload/background.mp4" type="video/mp4" />
   </video>
 
-
   <script src="config.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    // Prefetch all other pages so navigation is instant
+    ['portfolio.html', 'about.html', 'bookme.html'].forEach(page => {
+      const link = document.createElement('link');
+      link.rel  = 'prefetch';
+      link.href = page;
+      document.head.appendChild(link);
+    });
+
+    // Preload all Cloudinary images in the background while user is on home page
+    // Uses a small delay so it doesn't compete with the video loading
+    setTimeout(() => {
+      const cats  = CONFIG.cloudinary.categories;
+      const order = ['graduation', 'portrait', 'wedding', 'cars', 'events', 'street'];
+      order.forEach(cat => {
+        const count = cats[cat]?.count || 0;
+        for (let i = 1; i <= count; i++) {
+          const img = new Image();
+          img.src = cloudinaryUrl(cat, i);
+        }
+      });
+    }, 1500); // wait 1.5s so video gets priority first
+  </script>
 </body>
 </html>
