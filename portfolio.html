@@ -39,39 +39,51 @@
     <!-- VIEW CONTAINER -->
     <div class="view-container">
 
-      <!-- EVERYTHING VIEW: masonry grid — filled by JS -->
+      <!-- EVERYTHING VIEW -->
       <div class="view-everything view-panel active" id="viewEverything">
         <div class="masonry-grid" id="masonryGrid"></div>
       </div>
 
-      <!-- CATEGORIES VIEW: tiles — cover images filled by JS -->
+      <!-- CATEGORIES VIEW -->
       <div class="view-categories view-panel" id="viewCategories">
         <div class="cat-grid">
-          <div class="cat-tile" id="cat-portrait">
+          <div class="cat-tile" id="cat-portrait"    onclick="openCategory('portrait')">
             <img src="" alt="" loading="eager" />
             <div class="cat-label">PORTRAITS</div>
           </div>
-          <div class="cat-tile" id="cat-graduation">
+          <div class="cat-tile" id="cat-graduation"  onclick="openCategory('graduation')">
             <img src="" alt="" loading="eager" />
             <div class="cat-label">GRADUATION</div>
           </div>
-          <div class="cat-tile" id="cat-landscape">
+          <div class="cat-tile" id="cat-landscape"   onclick="openCategory('landscape')">
             <img src="" alt="" loading="eager" />
             <div class="cat-label">LANDSCAPE</div>
           </div>
-          <div class="cat-tile" id="cat-cars">
+          <div class="cat-tile" id="cat-cars"        onclick="openCategory('cars')">
             <img src="" alt="" loading="eager" />
             <div class="cat-label">CARS</div>
           </div>
-          <div class="cat-tile" id="cat-events">
+          <div class="cat-tile" id="cat-events"      onclick="openCategory('events')">
             <img src="" alt="" loading="eager" />
             <div class="cat-label">EVENTS</div>
           </div>
-          <div class="cat-tile" id="cat-street">
+          <div class="cat-tile" id="cat-street"      onclick="openCategory('street')">
             <img src="" alt="" loading="eager" />
             <div class="cat-label">STREET</div>
           </div>
         </div>
+      </div>
+
+      <!-- CATEGORY DETAIL VIEW -->
+      <div class="view-panel" id="viewCategoryDetail">
+        <div class="cat-detail-header">
+          <button class="back-btn" onclick="closeCategory()"><img src="https://res.cloudinary.com/doailynuq/image/upload/back1.png" alt="Back" class="back-btn-img" /></button>
+          <span class="cat-detail-title" id="catDetailTitle">
+            <img id="catDetailTitleImg" src="" alt="" class="cat-detail-title-img" style="display:none;" />
+            <span id="catDetailTitleText"></span>
+          </span>
+        </div>
+        <div class="masonry-grid" id="categoryGrid"></div>
       </div>
 
     </div><!-- /.view-container -->
@@ -82,21 +94,114 @@
   <script src="js/main.js"></script>
   <script>
 
-    // ── Toggle views ────────────────────────────────────────
+    const order = ['graduation', 'portrait', 'cars', 'events', 'street', 'landscape'];
+
+    // Custom title images for category detail header (add more as you create them)
+    const catTitleImages = {
+      portrait:   'https://res.cloudinary.com/doailynuq/image/upload/portraits.png',
+      graduation: 'https://res.cloudinary.com/doailynuq/image/upload/graduation.png',
+      landscape:  'https://res.cloudinary.com/doailynuq/image/upload/landscape.png',
+      cars:       'https://res.cloudinary.com/doailynuq/image/upload/cars.png',
+      events:     'https://res.cloudinary.com/doailynuq/image/upload/events.png',
+      street:     'https://res.cloudinary.com/doailynuq/image/upload/street.png',
+    };
+
+    // ── Toggle main views ───────────────────────────────────
     function showView(view) {
       document.getElementById('viewEverything').classList.toggle('active', view === 'everything');
       document.getElementById('viewCategories').classList.toggle('active', view === 'categories');
+      document.getElementById('viewCategoryDetail').classList.remove('active');
       document.getElementById('btnEverything').classList.toggle('active', view === 'everything');
       document.getElementById('btnCategories').classList.toggle('active', view === 'categories');
     }
 
-    // ── Populate images from Cloudinary ────────────────────
-    (function populateImages() {
-      const cats = CONFIG.cloudinary.categories;
+    // ── Open a category detail ──────────────────────────────
+    function openCategory(cat) {
+      const cats  = CONFIG.cloudinary.categories;
+      const count = cats[cat]?.count || 0;
+      if (!count) return;
 
-      // Build full list of all image URLs across enabled categories
-      const order = ['graduation', 'portrait', 'cars', 'events', 'street', 'landscape'];
+      // Set title — use custom image if available, otherwise plain text
+      const titleImg  = document.getElementById('catDetailTitleImg');
+      const titleText = document.getElementById('catDetailTitleText');
+      if (catTitleImages[cat]) {
+        titleImg.src          = catTitleImages[cat];
+        titleImg.style.display = 'block';
+        titleText.textContent  = '';
+      } else {
+        titleImg.style.display = 'none';
+        titleText.textContent  = cat.toUpperCase();
+      }
+
+      // Build, shuffle, and populate grid
+      const urls = [];
+      for (let i = 1; i <= count; i++) urls.push(cloudinaryUrl(cat, i));
+      for (let i = urls.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [urls[i], urls[j]] = [urls[j], urls[i]];
+      }
+
+      const grid = document.getElementById('categoryGrid');
+      grid.innerHTML = '';
+      urls.forEach(url => {
+        const img     = document.createElement('img');
+        img.src       = url;
+        img.alt       = '';
+        img.loading   = 'eager';
+        img.onerror   = function() {
+          this.style.cssText = 'display:none;margin:0;padding:0;height:0';
+          this.style.gridRowEnd = 'span 1';
+        };
+        img.addEventListener('load', function() { setSpan(this); }, { once: true });
+        grid.appendChild(img);
+      });
+
+      // Switch to detail view
+      document.getElementById('viewEverything').classList.remove('active');
+      document.getElementById('viewCategories').classList.remove('active');
+      document.getElementById('viewCategoryDetail').classList.add('active');
+    }
+
+    // ── Back to categories ──────────────────────────────────
+    function closeCategory() {
+      document.getElementById('viewCategoryDetail').classList.remove('active');
+      document.getElementById('viewCategories').classList.add('active');
+      document.getElementById('btnCategories').classList.add('active');
+      document.getElementById('btnEverything').classList.remove('active');
+    }
+
+    // ── Masonry row-span helper ──────────────────────────────
+    const ROW_H = 10;  // must match grid-auto-rows in CSS
+    const GAP   = 8;   // must match gap in CSS
+
+    function setSpan(img) {
+      const grid     = img.closest('.masonry-grid');
+      const colCount = window.innerWidth <= 768 ? 2 : 3;
+      const colW     = (grid.offsetWidth - GAP * (colCount - 1)) / colCount;
+      const h        = Math.round(img.naturalHeight * colW / img.naturalWidth);
+      const span     = Math.ceil((h + GAP) / (ROW_H + GAP));
+      img.style.gridRowEnd = 'span ' + span;
+    }
+
+    function applySpans(grid) {
+      grid.querySelectorAll('img').forEach(img => {
+        if (img.complete && img.naturalWidth) {
+          setSpan(img);
+        } else {
+          img.addEventListener('load', function() { setSpan(this); }, { once: true });
+        }
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.masonry-grid').forEach(applySpans);
+    });
+
+    // ── Populate images ─────────────────────────────────────
+    (function populateImages() {
+      const cats    = CONFIG.cloudinary.categories;
       const allUrls = [];
+
       order.forEach(cat => {
         const count = cats[cat]?.count || 0;
         for (let i = 1; i <= count; i++) {
@@ -104,26 +209,28 @@
         }
       });
 
-      // Fisher-Yates shuffle — random scatter across categories
+      // Shuffle
       for (let i = allUrls.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [allUrls[i], allUrls[j]] = [allUrls[j], allUrls[i]];
       }
 
-      // Inject into masonry grid
+      // Inject into everything grid
       const grid = document.getElementById('masonryGrid');
       allUrls.forEach(url => {
-        const img = document.createElement('img');
-        img.src     = url;
-        img.alt     = '';
-        img.loading = 'eager';
-        img.onerror = function() {
+        const img     = document.createElement('img');
+        img.src       = url;
+        img.alt       = '';
+        img.loading   = 'eager';
+        img.onerror   = function() {
           this.style.cssText = 'display:none;margin:0;padding:0;height:0';
+          this.style.gridRowEnd = 'span 1';
         };
+        img.addEventListener('load', function() { setSpan(this); }, { once: true });
         grid.appendChild(img);
       });
 
-      // CATEGORIES: set cover (photo #1) for each tile, hide if not uploaded
+      // Set category tile covers
       order.forEach(cat => {
         const tile = document.getElementById('cat-' + cat);
         if (!tile) return;
@@ -143,7 +250,7 @@
       const siteName = document.querySelector('.site-name');
       if (!overlay || !main || !siteName) return;
       const navItems = document.querySelectorAll('.nav-item');
-      let maxRight = siteName.getBoundingClientRect().right;
+      let maxRight   = siteName.getBoundingClientRect().right;
       navItems.forEach(el => {
         const r = el.getBoundingClientRect().right;
         if (r > maxRight) maxRight = r;

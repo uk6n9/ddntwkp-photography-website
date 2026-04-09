@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Me — Ukana Odpurev</title>
+  <link rel="icon" type="image/png" href="assets/favicon.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/bookme.css" />
+</head>
+<body class="bookme-page">
+
+  <div class="site-overlay">
+    <p class="site-name">UKANA ODPUREV</p>
+    <nav class="side-nav" id="sideNav">
+      <a class="nav-item" href="home.html">HOME</a>
+      <a class="nav-item" href="portfolio.html">PORTFOLIO</a>
+      <a class="nav-item" href="about.html">ABOUT</a>
+      <span class="nav-item active">BOOK ME</span>
+    </nav>
+  </div>
+
+  <main class="bookme-main">
+
+    <div class="bookme-content">
+      <p class="bookme-heading">Send your ideas or plans to my Instagram</p>
+      <a class="bookme-btn" href="https://www.instagram.com/ukanadidntwakeup/" target="_blank" rel="noopener">
+        @ukanadidntwakeup
+      </a>
+    </div>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function syncMainMargin() {
+      const overlay  = document.querySelector('.site-overlay');
+      const main     = document.querySelector('.bookme-main');
+      const siteName = document.querySelector('.site-name');
+      if (!overlay || !main || !siteName) return;
+      const navItems = document.querySelectorAll('.nav-item');
+      let maxRight = siteName.getBoundingClientRect().right;
+      navItems.forEach(el => {
+        const r = el.getBoundingClientRect().right;
+        if (r > maxRight) maxRight = r;
+      });
+      const gap = window.innerWidth <= 768 ? 8 : 20;
+      main.style.marginLeft = (maxRight + gap) + 'px';
+    }
+
+    window.addEventListener('resize', syncMainMargin);
+    new MutationObserver(syncMainMargin).observe(
+      document.querySelector('.site-overlay'),
+      { attributes: true, attributeFilter: ['style'] }
+    );
+
+    setupOverlayScale();
+    syncMainMargin();
+  </script>
+</body>
+</html>
