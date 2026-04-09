@@ -214,7 +214,7 @@ body.portfolio-page .bg-video { display: none; }
 
   .masonry-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 5px 5px;
+    gap: 8px 8px;
   }
 
   .cat-grid {

@@ -180,7 +180,7 @@
       const colW     = (grid.offsetWidth - GAP * (colCount - 1)) / colCount;
       const h        = Math.round(img.naturalHeight * colW / img.naturalWidth);
       const span     = Math.ceil((h + GAP) / (ROW_H + GAP));
-      img.style.gridRowEnd = 'span ' + span;
+      img.style.gridRowEnd = 'span ' + Math.max(1, span);
     }
 
     function applySpans(grid) {
