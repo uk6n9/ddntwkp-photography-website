@@ -85,7 +85,8 @@
         const r = el.getBoundingClientRect().right;
         if (r > maxRight) maxRight = r;
       });
-      main.style.marginLeft = (maxRight + 20) + 'px';
+      const gap = window.innerWidth <= 768 ? 8 : 20;
+      main.style.marginLeft = (maxRight + gap) + 'px';
     }
 
     window.addEventListener('resize', syncMainMargin);

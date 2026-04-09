@@ -148,35 +148,37 @@ body.portfolio-page .bg-video { display: none; }
    ============================================================ */
 /* Always 3 columns — no responsive override for the grid */
 @media (max-width: 768px) {
-  /* margin-left still set by syncMainMargin JS — just reduce padding */
   .portfolio-main {
-    padding: 16px 10px 40px;
+    padding: 16px 8px 40px;
+  }
+
+  .view-toggle {
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow: hidden;
   }
 
   .toggle-btn .btn-image {
-    height: 72px;
+    height: 52px;
+    width: auto;
   }
 
   .masonry-grid {
     column-count: 2;
-    column-gap: 6px;
+    column-gap: 5px;
   }
 
   .masonry-grid img {
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   .cat-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    gap: 5px;
   }
 
   .cat-label {
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
   }
-}
-
-@media (max-width: 420px) {
-  .masonry-grid { column-count: 1; }
 }
