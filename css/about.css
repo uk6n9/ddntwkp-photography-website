@@ -15,10 +15,10 @@ body.about-page .bg-video { display: none; }
    ============================================================ */
 .about-main {
   margin-left: 190px; /* matches nav overlay at typical screen size; JS fine-tunes */
-  padding: 60px 48px 80px;
+  padding: 20px 48px 40px;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* ============================================================
@@ -27,7 +27,7 @@ body.about-page .bg-video { display: none; }
 .about-layout {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: 64px;
+  gap: 0px;
   align-items: start;
   width: 100%;
   max-width: 960px;
@@ -56,7 +56,7 @@ body.about-page .bg-video { display: none; }
 }
 
 /* When a real photo is added, replace placeholder with: */
-.about-photo-wrap img {
+.about-photo-wrap img:first-child {
   width: 100%;
   aspect-ratio: 3/4;
   object-fit: cover;
@@ -72,17 +72,16 @@ body.about-page .bg-video { display: none; }
   font-weight: 500;
   letter-spacing: 0.12em;
   color: #111;
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 
-.about-location {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 300;
-  letter-spacing: 0.1em;
-  color: #888;
-  margin-bottom: 36px;
-  text-transform: uppercase;
+.about-location-img {
+  height: 200px;
+  width: auto;
+  display: block;
+  margin-top: -25px;
+  margin-bottom: -50px;
+  opacity: 1;
 }
 
 .about-bio {
@@ -91,14 +90,14 @@ body.about-page .bg-video { display: none; }
   font-weight: 300;
   line-height: 1.85;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .about-divider {
   width: 32px;
   height: 1px;
   background: #ddd;
-  margin: 36px 0;
+  margin: 16px 0;
 }
 
 .about-specialties {
@@ -138,7 +137,7 @@ body.about-page .bg-video { display: none; }
 
   .about-layout {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 12px;
   }
 
   .about-photo-wrap {
