@@ -28,7 +28,7 @@ const CONFIG = {
       graduation: { count: 15, cover: 7 },  // cover: which photo # to feature (1–15)
       portrait:   { count: 15, cover: 15 },
       wedding:    { count:  0, cover: 1 },
-      cars:       { count:  0, cover: 1 },
+      cars:       { count:  24, cover: 21 },
       events:     { count:  0, cover: 1 },
       street:     { count:  0, cover: 1 },
     },
