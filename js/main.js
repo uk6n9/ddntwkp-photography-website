@@ -14,20 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // Dynamically scale the paper overlay with viewport size
 function setupOverlayScale() {
   const overlay = document.querySelector('.site-overlay');
-  // Base reference resolution — scale is 1.0 at this size
   const BASE_W = 1440;
   const BASE_H = 900;
-
-  const PADDING = 15; // px gap from screen edges
+  const PADDING = 15;
 
   function update() {
-    const scaleW = window.innerWidth  / BASE_W;
-    const scaleH = window.innerHeight / BASE_H;
-    const scale  = Math.sqrt(scaleW * scaleH);
-
-    // After scaling from top-left origin, offset by padding
-    // so the visible paper never touches any screen edge
+    const scale = Math.sqrt((window.innerWidth / BASE_W) * (window.innerHeight / BASE_H));
     overlay.style.transform = `translate(${PADDING}px, ${PADDING}px) scale(${scale})`;
+    // Reveal only after correct scale is applied — prevents size-jump on load
+    overlay.style.visibility = 'visible';
   }
 
   update();
@@ -68,3 +63,34 @@ function setupNavClicks() {
 
 // Background video loops automatically via HTML attributes
 function setupDrag() {}
+
+// ----------------------------------------------------------
+// CLOUDINARY HELPERS
+// ----------------------------------------------------------
+
+// Returns the CDN URL for a single image
+// e.g. cloudinaryUrl('graduation', 3) →
+//   https://res.cloudinary.com/doailynuq/image/upload/q_auto,f_auto/graduation_3.jpg
+function cloudinaryUrl(category, index) {
+  const cloud = CONFIG.cloudinary.cloudName;
+  return `https://res.cloudinary.com/${cloud}/image/upload/${category}_${index}.jpg`;
+}
+
+// Returns an array of all URLs for a category
+function cloudinaryCategoryUrls(category) {
+  const count = CONFIG.cloudinary.photosPerCategory;
+  return Array.from({ length: count }, (_, i) => cloudinaryUrl(category, i + 1));
+}
+
+// Builds and injects <img> tags into a container element
+function loadCloudinaryImages(category, containerEl, extraClass = '') {
+  if (!CONFIG.cloudinary.categories[category]) return;
+  cloudinaryCategoryUrls(category).forEach(url => {
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = '';
+    img.loading = 'eager';
+    if (extraClass) img.className = extraClass;
+    containerEl.appendChild(img);
+  });
+}

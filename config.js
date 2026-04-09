@@ -16,6 +16,25 @@ const CONFIG = {
   },
 
   // ----------------------------------------------------------
+  // CLOUDINARY
+  // Cloud name from your Cloudinary dashboard.
+  // Images must be named: graduation_1.jpg, portrait_1.jpg etc.
+  // Upload 15 per category. Add more categories as you go.
+  // ----------------------------------------------------------
+  cloudinary: {
+    cloudName: 'doailynuq',
+    // Number of photos per category + which photo to use as the category cover
+    categories: {
+      graduation: { count: 15, cover: 7 },  // cover: which photo # to feature (1–15)
+      portrait:   { count: 15, cover: 15 },
+      wedding:    { count:  0, cover: 1 },
+      cars:       { count:  0, cover: 1 },
+      events:     { count:  0, cover: 1 },
+      street:     { count:  0, cover: 1 },
+    },
+  },
+
+  // ----------------------------------------------------------
   // ADOBE LIGHTROOM API
   // How to set up:
   //  1. Go to https://developer.adobe.com/console

@@ -26,14 +26,14 @@ a { color: inherit; text-decoration: none; }
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.95);
   min-width: 100vw;
   min-height: 100vh;
   width: auto;
   height: auto;
   object-fit: cover;
-  object-position: center center;
   z-index: -1;
+  pointer-events: none;
 }
 
 /* ============================================================
@@ -88,7 +88,8 @@ a { color: inherit; text-decoration: none; }
   background: url('../assets/paper.png') center / 100% 100% no-repeat;
   width: fit-content;
   transform-origin: top left;
-  /* scale set dynamically by JS */
+  /* hidden until JS applies the correct scale — prevents size-jump on load */
+  visibility: hidden;
 }
 
 .site-name {

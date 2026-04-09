@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "Static Site (Python)",
-      "runtimeExecutable": "ruby",
-      "runtimeArgs": ["-run", "-e", "httpd", "--", "/Users/gt3rs/Desktop/WebSitePhoto", "-p", "8080"],
+      "runtimeExecutable": "/usr/bin/python3",
+      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "/Users/gt3rs/Desktop/WebSitePhoto"],
       "port": 8080
     }
   ]

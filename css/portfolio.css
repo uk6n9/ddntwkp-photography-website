@@ -17,10 +17,10 @@ body.portfolio-page .bg-video { display: none; }
    MAIN CONTENT — offset from left nav
    ============================================================ */
 .portfolio-main {
-  /* margin-left set dynamically by JS based on nav width */
+  margin-left: 190px; /* matches nav overlay at typical screen size; JS fine-tunes */
   padding: 28px 32px 80px;
   min-height: 100vh;
-  transition: margin-left 0.15s ease;
+  /* no transition — prevents visible shift on page load */
 }
 
 /* ============================================================
@@ -67,6 +67,24 @@ body.portfolio-page .bg-video { display: none; }
 
 
 /* ============================================================
+   VIEW TRANSITIONS — overlay both panels, crossfade with opacity only
+   ============================================================ */
+.view-container {
+  display: grid;
+}
+
+.view-panel {
+  grid-area: 1 / 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.view-panel.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
    EVERYTHING — masonry columns, consistent 8px gap everywhere
    ============================================================ */
 .masonry-grid {
@@ -101,11 +119,6 @@ body.portfolio-page .bg-video { display: none; }
   aspect-ratio: 4/3;
 }
 
-.cat-tile.cat-wide {
-  grid-column: span 2;
-  aspect-ratio: 16/7;
-}
-
 .cat-tile img {
   width: 100%;
   height: 100%;
@@ -134,7 +147,6 @@ body.portfolio-page .bg-video { display: none; }
    RESPONSIVE
    ============================================================ */
 /* Always 3 columns — no responsive override for the grid */
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .cat-grid { grid-template-columns: 1fr; }
-  .cat-tile.cat-wide { grid-column: span 1; aspect-ratio: 4/3; }
 }
